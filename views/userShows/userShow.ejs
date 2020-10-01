@@ -1,0 +1,64 @@
+<%- include("../../partials/header") %> 
+<!-- avatar style -->
+<link rel="stylesheet" href="../../public/stylesheets/avater.css">
+<!-- avatar html -->
+<div class="avatar-wrapper">
+  <% if(user.profileImg != "") { %> 
+      <img class="profile-pic" src="<%= user.profileImg %>" />
+  <% } else { %> 
+      <img class="profile-pic" src="" />
+  <% } %> 
+</div>
+
+<!-- main profile content -->
+<div class="container">
+    <div class="text-center">
+        <h4>
+            <p>
+                <%=user.displayName%>
+                <% if (currentUser != null && currentUser.displayName != user.displayName) { %>
+                    <form action="/follow/<%=user.displayName%>" method="POST" class="ml-2">
+                        <input type="hidden" value="<%=user.displayName%>" name = "authorName">
+                        <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
+                        <% if (currentUser.followings.find(elem => elem.displayName === user.displayName)) { %>
+                                <input type="submit" value="Following" class="btn btn-outline-info btn-sm">
+                        <% } else { %>
+                                <input type="submit" value="Follow" class="btn btn-outline-info btn-sm">
+                        <% } %>    
+                    </form>
+                <% } %>
+            </p>
+            <a href="/usershow/<%= user.displayName%>/followers" class="badge badge-light"><%=user.followers.length%> Followers</a>
+        </h4>
+        
+    </div>
+
+    <div class="card border-light mt-3 mb-3" style="max-width: 100%;" >
+        <div class="card-header">About Me</div>
+        <div class="card-body">
+            <% if (user.aboutMe == "You haven't share anything about youself yet") { %>
+                <p class="card-text">He or she does not share anything yet...</p>
+            <% } else { %>
+                <p class="card-text"><%=user.aboutMe%></p>
+            <% } %>
+        </div>
+    </div>
+   
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="contact" aria-selected="false">Blogs</a>
+        </li>
+
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab"><%- include("_profile_show") %></div>
+        <div class="tab-pane fade" id="blogs" role="tabpanel" aria-labelledby="profile-tab"><%- include("_blogs_show") %></div>
+    </div>
+</div>
+
+<%- include("../../partials/footer") %> 

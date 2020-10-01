@@ -1,0 +1,55 @@
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<div class="container mt-4 mb-4" >
+
+
+
+    <div class="form-group row mt-4">
+        <label for="title" class="col-sm-2 col-form-label">Blog Title:</label>
+        <div class="col-sm-10">
+            <input required type="text" class="form-control" name="title" id="title"  value="<%= blog.title %>" required>
+        </div>
+
+        <label for="coverImg" class="col-sm-2 col-form-label mt-2">Cover Image Url:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control mt-2" name="coverImg" id="coverImg"  value="<%= blog.coverImg %>" >
+        </div>
+    </div>
+
+
+
+    <h3>Edit below:</h3>
+    <!-- Create the editor container -->
+    <textarea id="tinymce" name="contents"><%= blog.sanitizedHtml %></textarea>
+    <!-- Script element sourcing the TinyMCE configuration -->
+    <script type="text/javascript" src= "../../public/plugins/tinymce-config.js"></script>
+
+    <a  href="/home" class="btn btn-secondary mt-4" >Cancel</a>
+     
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#saveModal">
+        Save
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveEditModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="saveEditModal">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Save changes?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-success" value="Save">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

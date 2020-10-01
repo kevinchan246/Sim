@@ -1,0 +1,52 @@
+<%- include("../../partials/header") %> 
+
+
+
+
+<div class="container">
+
+  
+  <h1 class="mt-4">
+    <% if(blogs) { %>
+      Search result for : <%= qs.search %>
+    <% } else { %>
+      There is no maching result for : No matching
+    <% } %>
+  </h1>
+  <hr>
+  <% blogs.forEach(blog => { %>
+    <div class="media mt-4">
+      <div class="media-body">
+        <h2 class="mt-0 mb-1"><a href="/home/<%=blog.slug%>" class="text-dark"><%= blog.title %></a></h2>
+
+        <div class="row ml-3 mt-3">
+          <div class="row">
+            <% if (blog.author.profileImg) { %>
+              <img class="profileImg mr-1" src="<%= blog.author.profileImg%>">
+            <% } else {%>
+              <i class="far fa-lg fa-user profileImg"></i>
+            <% } %>  
+            <a href="/usershow/<%=blog.author.displayName%>" class="text-muted"><%= blog.author.displayName %>,</a>   
+          </div>
+          <p class="text-muted ml-3 float-left"> <%= blog.date.toDateString().substring(4) %> </p>
+        </div>
+
+        <% if (blog.sanitizedHtml.length > 250) { %> 
+          <p><%- blog.sanitizedHtml.substring(0,250) %>......</p>
+        <% } else{ %>
+          <p><%- blog.sanitizedHtml %></p>
+        <% } %> 
+      </div>   
+      <% if (blog.coverImg) { %> 
+          <img src="<%=blog.coverImg%>" class="ml-4 previewCover align-self-center" alt="Cover Image">
+      <% } %>  
+        
+          
+      
+      
+    </div>
+    <hr>
+  <% }); %>   
+</div>
+
+<%- include("../../partials/footer") %> 

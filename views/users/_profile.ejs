@@ -1,0 +1,36 @@
+
+
+<div class="container">
+    <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">DisplayName:</th>
+            <td><%= currentUser.displayName%></td>
+          </tr>
+          <tr>
+            <th scope="row">E-mail Address:</th>
+            <td>
+              <%= currentUser.email%>
+              <% if (currentUser.emailVerified) {%> 
+                <i class="fas fa-check-circle"></i>
+              <% } else {%>
+                <form action="/verify" method="POST">
+                  <input type="hidden" name="id" value="<%= currentUser.id %>" >
+                  <input type="submit" class="btn btn-warning btn-sm" value="Verify">
+                </form>
+
+              <% } %>
+            </td>
+
+          </tr>
+          <tr>
+            <th scope="row">Job:</th>
+            <td><%= currentUser.jobTitle%></td>
+          </tr>
+          <tr>
+            <th scope="row">Member Since:</th>
+            <td><%= currentUser.createdAt.toDateString()%></td>
+          </tr>
+        </tbody>
+    </table>
+</div>

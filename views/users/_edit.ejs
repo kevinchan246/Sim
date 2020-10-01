@@ -1,0 +1,46 @@
+
+<div class="container">
+    <form action="/account/<%= currentUser.id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="avatar-wrapper">
+                  
+                
+                <% if(currentUser.profileImg != "") { %> 
+                    <img class="profile-pic" src="<%= currentUser.profileImg %>" />
+                <% } else { %> 
+                    <img class="profile-pic" src="" />
+                <% } %> 
+        
+        
+                <div class="upload-button">
+                    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                </div>
+                <input class="file-upload" name="profileImg" type="file" accept="image/*"/>
+            </div>
+
+
+
+            <label for="displayName" class="mt-2" required>Display Name:</label>
+            <input type="text" class="form-control" name="displayName" placeholder="Enter the name you want to display" value="<%=  currentUser.displayName %>" required>
+            <label for="displayName" class="mt-2" required>Job title:</label>
+            <input type="text" class="form-control" name="jobTitle" placeholder="Job Title" value="<%=  currentUser.jobTitle %>">
+            <label for="aboutMe" class="mt-2" >About Me:</label>
+            <textarea class="form-control" name="aboutMe" id="aboutMe"><%= currentUser.aboutMe%></textarea>
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-success btn-sm" value="Save">
+        </div>
+    
+    
+    </form>
+    
+
+
+
+
+</div>
+

@@ -1,0 +1,23 @@
+<% blogs.forEach(blog => { %>
+    <% if (blog.author.id == currentUser.id){ %>
+        <div class="media mt-4">
+            <div class="media-body">
+              <h2 class="mt-0 mb-1"><a href="/home/<%=blog.slug%>" class="text-dark"><%= blog.title %></a></h2>
+      
+              <div class="row mt-1">
+                <p class="text-muted ml-3 float-left"> <%= blog.date.toDateString().substring(4) %> </p>
+              </div>
+      
+              <% if (blog.sanitizedHtml.length > 250) { %> 
+                <p><%- blog.sanitizedHtml.substring(0,250) %>......</p>
+              <% } else{ %>
+                <p><%- blog.sanitizedHtml %></p>
+              <% } %> 
+            </div>   
+            <% if (blog.coverImg) { %> 
+                <img src="<%=blog.coverImg%>" class="ml-4 previewCover align-self-center" alt="Cover Image">
+            <% } %>  
+          </div>
+          <hr>
+    <% } %>
+<% }); %>  

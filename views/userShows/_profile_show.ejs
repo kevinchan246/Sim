@@ -1,0 +1,22 @@
+<div class="container">
+    <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">DisplayName:</th>
+            <td><%= user.displayName%></td>
+          </tr>
+          <tr>
+            <th scope="row">E-mail Address:</th>
+            <td><%= user.email%></td>
+          </tr>
+          <tr>
+            <th scope="row">Job:</th>
+            <td><%= user.jobTitle%></td>
+          </tr>
+          <tr>
+            <th scope="row">Member Since:</th>
+            <td><%= user.createdAt.toDateString()%></td>
+          </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,12 @@
+<% user.followings.forEach(follow => { %>
+    <div class="container">
+        <ul class="list-group mt-2">
+            <li class="list-group-item border-0">
+
+                <a href="/usershow/<%=follow.displayName%>">
+                    <img src="<%=follow.profileImg%>" class="navbar-profileImg ml-2 mr-2"><%= follow.displayName %>
+                </a>
+            </li>
+        </ul>
+    </div>
+<% }); %>

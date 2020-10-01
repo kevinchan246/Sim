@@ -1,0 +1,103 @@
+<%- include("../../partials/header") %> 
+
+
+
+
+<link rel="stylesheet" href="../../public/stylesheets/avater.css">
+<script src="../../public/plugins/avatar_upload.js"></script>
+<!-- avatar html -->
+
+<div class="avatar-wrapper">
+  <% if(currentUser.profileImg != "") { %> 
+      <img class="profile-pic" src="<%= currentUser.profileImg %>" />
+  <% } else { %> 
+      <img class="profile-pic" src="" />
+  <% } %> 
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="editprofile" tabindex="-1" aria-labelledby="editProfileModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModal"><i class="fas fa-user-edit"></i> Edit Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <%- include("_edit") %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editPassword" tabindex="-1" aria-labelledby="editPasswordModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editPasswordModal"><i class="fas fa-key"></i> Change Password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+  
+                  <%- include("password") %>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="container" >
+    <div class="text-center">
+        <h4>
+          <p><%=currentUser.displayName%></p>
+          <p>
+            <a href="/usershow/<%= user.displayName%>/followers" class="badge badge-light"><%=user.followers.length%> Followers</a>
+          </p>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#editprofile">
+            <i class="fas fa-user-edit"></i>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#editPassword">
+            <i class="fas fa-key"></i>
+          </button>
+        </h4>
+    </div>
+    
+    <div class="card border-light mt-3 mb-3" style="max-width: 100%;" >
+        <div class="card-header">About Me</div>
+        <div class="card-body">
+          <p class="card-text"><%= currentUser.aboutMe%></p>
+
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="blogs-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="blogs" aria-selected="false">My Blogs</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="follow-tab" data-toggle="tab" href="#follow" role="tab" aria-controls="follow" aria-selected="false">Following</a>
+        </li>
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab"><%- include("_profile") %></div>
+        <div class="tab-pane fade" id="blogs" role="tabpanel" aria-labelledby="blogs-tab"><%- include("_blogs") %></div>
+        <div class="tab-pane fade" id="follow" role="tabpanel" aria-labelledby="follow-tab"><%- include("_following") %></div>
+    </div>
+</div>
+
+
+
+<%- include("../../partials/footer") %> 

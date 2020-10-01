@@ -1,0 +1,14 @@
+<%- include("../../partials/header") %>
+
+
+
+<div class="container mt-4 mb-4">
+    <h1>Edit the blog: <%= blog.title %></h1>
+
+    <form action="/home/<%= blog.id%>?_method=PUT" method="POST">
+    <%- include("_form_fields") %>
+
+    </form>
+</div>
+
+<%- include("../../partials/footer") %>

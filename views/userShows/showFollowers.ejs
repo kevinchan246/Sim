@@ -1,0 +1,79 @@
+<%- include("../../partials/header") %> 
+<!-- avatar style -->
+<link rel="stylesheet" href="../../public/stylesheets/avater.css">
+<!-- avatar html -->
+<div class="container w-50">
+    <div class="card border-0">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <div class="avatar-wrapper">
+                    <% if(user.profileImg != "") { %> 
+                        <img class="profile-pic" src="<%= user.profileImg %>" />
+                    <% } else { %> 
+                        <img class="profile-pic" src="" />
+                    <% } %> 
+                </div>
+            </div>
+        
+        
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2>
+                        <%=user.displayName%>
+                        <% if (currentUser != null && currentUser.displayName != user.displayName) { %>
+                            <form action="/follow/<%=user.displayName%>" method="POST" class="ml-2">
+                                <input type="hidden" value="<%=user.displayName%>" name = "authorName">
+                                <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
+                                <% if (currentUser.followings.find(elem => elem.displayName === user.displayName)) { %>
+                                        <input type="submit" value="Following" class="btn btn-outline-info btn-sm">
+                                <% } else { %>
+                                        <input type="submit" value="Follow" class="btn btn-outline-info btn-sm">
+                                <% } %>    
+                            </form>
+                        <% } %>
+                    </h2>
+                    <% if (user.aboutMe == "You haven't share anything about youself yet") { %>
+                        <p class="card-text">He or she does not share anything yet...</p>
+                    <% } else { %>
+                        <p class="card-text"><%=user.aboutMe%></p>
+                    <% } %>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <h2><%=user.displayName%>'s Followers</h2>
+    <hr>
+    <div class="media mt-4">
+        <% user.followers.forEach(follower => { %>
+            
+                <div class="row">
+                    <img src="<%=follower.profileImg%>" class="showFollower-profileImg mr-2">
+                    <div>
+                        <a href="/usershow/<%=follower.displayName%>" class="ml-2"><span style="font-size: larger;"><%=follower.displayName%></span></a>
+                        <% if (currentUser != null && currentUser.displayName != follower.displayName) { %>
+                            <form action="/follow/<%=follower.displayName%>>" method="POST" class="ml-2 ">
+                                <input type="hidden" value="<%=follower.displayName%>" name = "authorName">
+                                <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
+                                <% if (currentUser.followings.find(elem => elem.displayName === follower.displayName)) { %>
+                                        <input type="submit" value="Following" class="btn btn-outline-info btn-sm">
+                                <% } else { %>
+                                        <input type="submit" value="Follow" class="btn btn-outline-info btn-sm">
+                                <% } %>    
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+
+                
+                <hr>
+            
+            
+        <% }) %>
+</div>
+
+<%- include("../../partials/footer") %> 
