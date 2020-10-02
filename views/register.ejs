@@ -2,8 +2,9 @@
 
 <div class="container">
     
-    <div style="width: 50%; margin: 25px auto;">
-        <h1> Creat Account</h1>
+    <div class="text-center" style="width: 50%; margin: 25px auto;">
+        
+        <h1>Join Sim</h1>
         <form action="/register" method="POST">
             <div class="form-group">
                 <input type="text" class="form-control mt-4" name="displayName" placeholder="Enter the name you want to display" value="<%= typeof displayName != 'undefined' ? displayName : '' %>" required>
@@ -18,12 +19,8 @@
             </div>
             <div class="mt-2">
                 
-                <input type="submit" class="btn btn-success btn-sm" value="Sign Up">
-                    
-                <a href="/auth/google" class="btn btn-sm googleLoginBtn d-inline ml-2">
-                    <i class="fab fa-google left"></i> Log in with Google
-                </a>
-                    
+                <input type="submit" class="btn btn-outline-info btn-md w-100" value="Sign Up">
+
             </div>
             
            

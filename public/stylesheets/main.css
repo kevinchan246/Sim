@@ -27,7 +27,51 @@
 
 .googleLoginBtn{
     color: white!important;
-    background-color: #d15151!important;
+    /* background-color: #d15151!important; */
+    background-color: #db3236!important;
+}
+
+.facebookLoginBtn{
+    color: white!important;
+    background-color: #3b5998!important;
+}
+
+.twitterLoginBtn {
+    color: white!important;
+    background-color: #00acee!important;
+}
+
+.loginLogo {
+    border-radius: 10%;
+    max-width: 2rem;
+    max-height: 2rem;
+    text-align: center;
+}
+
+.dividerLine {
+    border-top: solid #edeff1;
+    width: 40%;
+}
+
+.divider {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 28px 0;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.dividerText{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #878a8c;
+    text-transform: uppercase;
 }
 
 .profileImg {

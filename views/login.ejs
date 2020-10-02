@@ -3,29 +3,41 @@
 <div class="container" >
     
     <div style="width: 40%; margin: 25px auto;">
-        
-    
-        <h1 class="text-center mb-4">Login</h1>
-
-
-        <form action="/login" method="POST">
+        <div class="session text-center">
+            <h3 style="font-size: 80px; font-family: 'Lobster', cursive; ">Sim</h3>
+        </div>
+        <div class="section">
+            <a href="/auth/google" class="btn btn-sm googleLoginBtn mt-1 mb-2 w-100">
+                <i class="fab fa-google left"></i> Login with Google
+            </a>
+            <a href="/auth/facebook" class="btn btn-sm facebookLoginBtn mt-1 mb-2 w-100">
+                <i class="fab fa-facebook"></i> Login with Facebook
+            </a>
+            <!-- <a href="/auth/twitter" class="btn btn-sm twitterLoginBtn mt-1 mb-2 w-100">
+                <i class="fab fa-twitter"></i> Login with Twitter
+            </a> -->
+        </div>
+        <div class="divider">
+            <span class="dividerLine"></span>
+            <span class="dividerText">OR</span>
+            <span class="dividerLine"></span>
+        </div>
+        <form action="/login" method="POST" class="mt-2">
             <div class="form-group">
                 <input type="text" class="form-control mt-2" name="username" placeholder="E-mail" required>
                 <input type="password" class="form-control mt-2" name="password" placeholder="Password" required>
             </div>
-            <div class="mt-2 text-left">
-                <input type="submit" class="btn btn-success btn-sm mr-2" id="loginBtn" value="Login">
-                <a href="/register" class="btn btn-info btn-sm">Sign Up</a>
+            <div class="mt-2 text-center ">
+                <input type="submit" class="btn btn-outline-dark btn-sm mr-2 w-100" id="loginBtn" value="Login">
             </div>
         </form>
-
-        <div class="section">
-            <a href="/auth/google" class="btn btn-sm googleLoginBtn mt-1">
-                <i class="fab fa-google left"></i> Log in with Google
-            </a>
+        <div class="mt-2">
+            New to Sim? <a href="/register">Sign Up</a>
         </div>
+        <div>
 
-        <a href="/forgot">Forgot password</a>
+            Forgot your <a href="/forgot">password</a>?
+        </div>
     </div>
 
 </div>
