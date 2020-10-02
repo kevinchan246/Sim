@@ -45,7 +45,7 @@ router.get("/account/:id", middleware.isLoggedIn, async(req, res) => {
 
 //update profile route 
 router.put("/account/:id", upload.single('profileImg'), async(req, res, next) => {
-    let user = await User.findById(req.params.id);
+    let user = await User.findById(req.body.userId);
     
     //check if there is any file need to be upload
     if (req.file){
@@ -451,6 +451,51 @@ router.post("/follow/:displayName", middleware.isLoggedIn, async(req, res) => {
     });
 })
 
+//route for save/unsave blogs
+router.post("/blog/:slug/save", async(req, res) => {
+    //find the specific blog and current user
+    const blog = await Blog.findOne({slug : req.body.slug});
+
+    await User.findOne({displayName : req.body.userName}, async(err, user) => {
+        if (err) {
+            req.flash("error", "Error finding current user...");
+            res.redirect("back");
+        } else {
+            if (user.savedBlogs.find(elem => elem.title === blog.title)){
+                //if the follower already exists, remove it
+                const idx = (savedBlogObj) => savedBlogObj.title === blog.title;
+                user.savedBlogs.splice(idx, 1);
+            } else {
+                //if the follower not exist, push it in
+                let newlySavedBlog = {
+                    blogId : blog.id,
+                    title : blog.title,
+                    coverImg : blog.coverImg,
+                    author: {
+                        id: blog.author.id,
+                        profileImg: blog.author.profileImg,
+                        displayName: blog.author.displayName,
+                    },
+                    date : blog.date,
+                    slug : req.body.slug
+                }
+                user.savedBlogs.push(newlySavedBlog);
+            }
+        
+            await user.save((err)=>{
+                if (err){
+                    req.flash("error", "Error happened when saving the user by save blog system");
+                    res.redirect("back");
+                } else {
+                    res.redirect("back");
+                }
+            })
+        }
+    });
+    
+    // user.savedBlogs.id = blog._id;
+    // user.savedBlogs.author = blog.author;
+})
 
 
 

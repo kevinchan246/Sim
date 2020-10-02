@@ -32,7 +32,23 @@ const UserSchema = new mongoose.Schema({
         displayName: String,
         profileImg: String
     }],
-
+    savedBlogs : [{
+        blogId : {
+            type : mongoose.Schema.Types.ObjectId,
+        },
+        title : String,
+        coverImg : String,
+        author: {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            profileImg: String,
+            displayName: String,
+        },
+        date: Date,
+        slug : String
+    }]
 
 })
 

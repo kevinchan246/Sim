@@ -6,14 +6,26 @@
 
 
 <h1 class="mb-1 mt-4"><%= blog.title %></h1>
+<!-- save blog -->
+<% if (currentUser != null && currentUser.displayName != blog.author.displayName) { %>
+    <form action="/blog/<%=blog.id%>/save" method="POST" class="d-inline">
+        <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
+        <input type="hidden" value="<%=blog.slug%>" name = "slug">
+        <% if (currentUser.savedBlogs.find(savedblog => savedblog.title === blog.title)) { %>
+                <button type="submit" class="btn btn-light btn-sm float-right"><span class="fas fa-bookmark fa-lg"></span></button>
+        <% } else { %>
+                <button type="submit" class="btn btn-light btn-sm float-right"><span class="far fa-bookmark fa-lg"></span></button>
+        <% } %>
+    </form>
+<% } %> 
 <!-- Override DELETE method -->
 <% if((currentUser) && (currentUser.username === blog.author.username)){ %> 
-    <a href="/home/edit/<%= blog.id%>" class="btn btn-light btn-sm float-right"><span class="far fa-edit fa-lg"></span></a>
+    <a href="/home/edit/<%= blog.id%>" class="btn btn-light btn-sm float-right"><span class="fas fa-edit fa-lg"></span></a>
 <% } %> 
 <form action="/home/<%= blog.id %>?_method=DELETE" method="POST" class="d-inline">
     <% if((currentUser) && (currentUser.username === blog.author.username)){ %> 
         <button type="button" class="btn btn-light btn-sm float-right" data-toggle="modal" data-target="#deleteModal">
-            <i class="fas fa-trash-alt fa-lg"></i>
+            <i class="far fa-trash-alt fa-lg"></i>
         </button>
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteBlogModal" aria-hidden="true">
             <div class="modal-dialog">
@@ -69,8 +81,12 @@
 <% if(blog.coverImg){ %> 
     <img class="coverImg" src="<%= blog.coverImg%>">
 <% } %>
+<div class="container">
+    <div class="blog-content">
 
-<%- blog.sanitizedHtml %> 
+        <%- blog.sanitizedHtml %> 
+    </div>
+</div>
 </div>
       
             
