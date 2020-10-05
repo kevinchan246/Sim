@@ -8,6 +8,14 @@
         <!-- jQuery and css for loader-->
         <link rel="stylesheet" type="text/css" href="/public/stylesheets/loader.css">
 
+        <!-- uikit -->
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
+        
         <!-- bootstrap -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -17,7 +25,7 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-                
+
         <!-- font awsome icons & google fonts -->
         <script src="https://kit.fontawesome.com/0f97c9ba16.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css"  href="/public/stylesheets/main.css">
@@ -28,88 +36,86 @@
         <title>Sim</title>
     </head>
     <body>
-         <!-- navbar -->
-         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="fas fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <nav class="navbar navbar-light bg-light">
-                    <a class="navbar-brand mb-0 h1" href="/home" style="font-size: 30px; font-family: 'Lobster', cursive; ">Sim</a>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="fas fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand mb-0 h1" href="/home" style="font-size: 30px; font-family: 'Lobster', cursive; ">Sim</a>
 
-                    <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/home/new" class="nav-link">Create Blog</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <nav class="navbar navbar-light bg-light ml-auto">
+
+                <form action="/result" method="GET" class="form-inline ml-auto">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0 mr-2" type="submit">Search</button>
+                </form>
+
+
+                <ul class="navbar-nav ml-auto">
+                    <% if(!currentUser){ %> 
                         <li class="nav-item">
-                            <a class="nav-link" href="/home">Home</i></a>
+                            <a class="nav-link" href="/login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/home/new" class="nav-link">Create Blog</a>
+                            <a class="nav-link" href="/register">Sign Up</a>
                         </li>
-                    </ul>
-                </nav>
-
-                <nav class="navbar navbar-light bg-light ml-auto">
-
-                    <form action="/result" method="GET" class="form-inline ml-auto">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
-                        <button class="btn btn-outline-secondary my-2 my-sm-0 mr-2" type="submit">Search</button>
-                    </form>
-
-
-                    <ul class="navbar-nav ml-auto">
-                        <% if(!currentUser){ %> 
-                            <li class="nav-item">
-                                <a class="nav-link" href="/login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/register">Sign Up</a>
-                            </li>
-                        <% }else{ %>
-                            <div class="btn-group ml-2">
-                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <% if (currentUser.profileImg) {%> 
-                                        <a class="text-muted" > <img class="navbar-profileImg" src="<%= currentUser.profileImg%>" alt=""></a>
-                                    <% } else { %> 
-                                        <a class="text-muted" ><i class="far fa-2x fa-user-circle"></i></a>
-                                    <% } %> 
-                                </button>
-                                <div>
-                                    <div class="dropdown-menu mr-5">
-                                        <a class="nav-link" href="/account/<%=currentUser.id%>">Account</a>
-                                        <a class="nav-link" href="/logout">Logout</a>
-                                    </div>
+                    <% }else{ %>
+                        <div class="btn-group ml-2">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <% if (currentUser.profileImg) {%> 
+                                    <a class="text-muted" > <img class="navbar-profileImg" src="<%= currentUser.profileImg%>" alt=""></a>
+                                <% } else { %> 
+                                    <a class="text-muted" ><i class="far fa-2x fa-user-circle"></i></a>
+                                <% } %> 
+                            </button>
+                            <div>
+                                <div class="dropdown-menu">
+                                    <a class="nav-link" href="/account/<%=currentUser.id%>">Account</a>
+                                    <a class="nav-link" href="/logout">Logout</a>
                                 </div>
                             </div>
-                            <li class="nav-item">
-                                
-                            </li>
-                        <% } %> 
+                        </div>
+                    <% } %> 
 
-                    </ul>
-                </nav>
-            </div>
+                </ul>
+            </nav>
+        </div>
     </nav>
 
     
-        <% if(error && error.length > 0){ %>
-            <div class="alert alert-danger text-center mb-0" role="alert">
-                <%= error %>
-            </div>        
-        <% } %> 
-        <% if(success && success.length > 0){ %>
-            <div class="alert alert-success text-center mb-0" role="alert">
-                <%= success %>
-            </div>
-        <% } %> 
+
+    <% if(error && error.length > 0){ %>
+        <div class="alert alert-danger text-center mb-0" role="alert">
+            <%= error %>
+        </div>        
+    <% } %> 
+    <% if(success && success.length > 0){ %>
+        <div class="alert alert-success text-center mb-0" role="alert">
+            <%= success %>
+        </div>
+    <% } %> 
 
 
-        <% if( typeof errs != 'undefined' ) { %> 
-            <div class="alert alert-warning alert-dismissible text-center mt-0" role="alert">
-                <%= errs %>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <% } %> 
+    <% if( typeof errs != 'undefined' ) { %> 
+        <div class="alert alert-warning alert-dismissible text-center mt-0" role="alert">
+            <%= errs %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %> 
         
 
         

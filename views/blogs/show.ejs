@@ -1,93 +1,165 @@
 <%- include("../../partials/header") %>
 
 
-
 <div class="container">
 
 
-<h1 class="mb-1 mt-4"><%= blog.title %></h1>
-<!-- save blog -->
-<% if (currentUser != null && currentUser.displayName != blog.author.displayName) { %>
-    <form action="/blog/<%=blog.id%>/save" method="POST" class="d-inline">
-        <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
-        <input type="hidden" value="<%=blog.slug%>" name = "slug">
-        <% if (currentUser.savedBlogs.find(savedblog => savedblog.title === blog.title)) { %>
-                <button type="submit" class="btn btn-light btn-sm float-right"><span class="fas fa-bookmark fa-lg"></span></button>
-        <% } else { %>
-                <button type="submit" class="btn btn-light btn-sm float-right"><span class="far fa-bookmark fa-lg"></span></button>
-        <% } %>
-    </form>
-<% } %> 
-<!-- Override DELETE method -->
-<% if((currentUser) && (currentUser.username === blog.author.username)){ %> 
-    <a href="/home/edit/<%= blog.id%>" class="btn btn-light btn-sm float-right"><span class="fas fa-edit fa-lg"></span></a>
-<% } %> 
-<form action="/home/<%= blog.id %>?_method=DELETE" method="POST" class="d-inline">
+    <h1 class="mb-1 mt-4"><%= blog.title %></h1>
+    <!-- save blog -->
+    <% if (currentUser != null && currentUser.displayName != blog.author.displayName) { %>
+        <form action="/blog/<%=blog.id%>/save" method="POST" class="d-inline">
+            <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
+            <input type="hidden" value="<%=blog.slug%>" name = "slug">
+            <% if (currentUser.savedBlogs.find(savedblog => savedblog.title === blog.title)) { %>
+                    <button type="submit" class="btn btn-light btn-sm float-right"><span class="fas fa-bookmark fa-lg"></span></button>
+            <% } else { %>
+                    <button type="submit" class="btn btn-light btn-sm float-right"><span class="far fa-bookmark fa-lg"></span></button>
+            <% } %>
+        </form>
+    <% } %> 
+    <!-- show comment -->
+
+    <!-- post comment Button trigger modal -->
+    <button type="button" class="btn btn-light btn-sm float-right" data-toggle="modal" data-target="#postComment">
+        <i class="far fa-comments fa-lg"></i>
+    </button>
+
+
+    
     <% if((currentUser) && (currentUser.username === blog.author.username)){ %> 
-        <button type="button" class="btn btn-light btn-sm float-right" data-toggle="modal" data-target="#deleteModal">
-            <i class="far fa-trash-alt fa-lg"></i>
-        </button>
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteBlogModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteBlogModal">Delete Blog</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p> Are you sure to delete this blog? Once you click the delete button below it cannot be restored anymore.</p>
-                    
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-sm btn-danger float-right">Delete</i></button>
+        <a href="/home/edit/<%= blog.id%>" class="btn btn-light btn-sm float-right"><span class="fas fa-edit fa-lg"></span></a>
+    <% } %>
+    <!-- Override DELETE method -->
+    <form action="/home/<%= blog.id %>?_method=DELETE" method="POST" class="d-inline">
+        <% if((currentUser) && (currentUser.username === blog.author.username)){ %> 
+            <button type="button" class="btn btn-light btn-sm float-right" data-toggle="modal" data-target="#deleteModal">
+                <i class="far fa-trash-alt fa-lg"></i>
+            </button>
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteBlogModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteBlogModal">Delete Blog</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p> Are you sure to delete this blog? Once you click the delete button below it cannot be restored anymore.</p>
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-danger float-right">Delete</i></button>
+                        </div>
                     </div>
                 </div>
             </div>
+        <% } %> 
+    </form>
+
+    <!-- blog header -->
+    <div class="text-muted mt-2">
+        <div class="row">
+
+            <a href="/usershow/<%=blog.author.displayName%>">
+                <% if (blog.author.profileImg) { %>
+                    <img class="navbar-profileImg ml-2" src="<%=blog.author.profileImg%>" >
+                <% } else {%>
+                    <i class="far fa-lg fa-user profileImg ml-3"></i>
+                <% } %>  
+                <%= blog.author.displayName %>
+            </a>
+
+            <% if (currentUser != null && currentUser.displayName != blog.author.displayName) { %>
+                <form action="/follow/<%=blog.author.displayName%>" method="POST" class="ml-2 ">
+                    <input type="hidden" value="<%=blog.author.displayName%>" name = "authorName">
+                    <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
+                    <% if (currentUser.followings.find(elem => elem.displayName === blog.author.displayName)) { %>
+                            <input type="submit" value="Following" class="btn btn-outline-info btn-sm">
+                    <% } else { %>
+                            <input type="submit" value="Follow" class="btn btn-outline-info btn-sm">
+                    <% } %>    
+                </form>
+            <% } %>   
         </div>
-    <% } %> 
-</form>
-
-<!-- blog header -->
-<div class="text-muted mt-2">
-    <div class="row">
-
-        <a href="/usershow/<%=blog.author.displayName%>">
-            <% if (blog.author.profileImg) { %>
-                <img class="navbar-profileImg ml-2" src="<%=blog.author.profileImg%>" >
-            <% } else {%>
-                <i class="far fa-lg fa-user profileImg ml-3"></i>
-            <% } %>  
-            <%= blog.author.displayName %>
-        </a>
-
-        <% if (currentUser != null && currentUser.displayName != blog.author.displayName) { %>
-            <form action="/follow/<%=blog.author.displayName%>>" method="POST" class="ml-2 ">
-                <input type="hidden" value="<%=blog.author.displayName%>" name = "authorName">
-                <input type="hidden" value="<%=currentUser.displayName%>" name = "userName">
-                <% if (currentUser.followings.find(elem => elem.displayName === blog.author.displayName)) { %>
-                        <input type="submit" value="Following" class="btn btn-outline-info btn-sm">
-                <% } else { %>
-                        <input type="submit" value="Follow" class="btn btn-outline-info btn-sm">
-                <% } %>    
-            </form>
-        <% } %>   
+        <p>Posted on <%= blog.date.toLocaleDateString()%></p>
     </div>
-    <p>Posted on <%= blog.date.toLocaleDateString()%></p>
-</div>
-<hr>
-<% if(blog.coverImg){ %> 
-    <img class="coverImg" src="<%= blog.coverImg%>">
-<% } %>
-<div class="container">
-    <div class="blog-content">
-
-        <%- blog.sanitizedHtml %> 
+    <hr>
+    <div class="container coverImg-container mt-2 mb-4">
+        <% if(blog.coverImg){ %> 
+            <img class="coverImg" src="<%= blog.coverImg%>">
+        <% } %>
     </div>
+    <div class="container blogContent-container">
+        <div class="blog-content">
+            <%- blog.sanitizedHtml %> 
+        </div>
+    </div>
+
+
+    <!-- area for showing comment -->
+
+    <div class="container">
+        <h4>Comments</h4>
+        <hr>
+        <% blog.comments.forEach(comment => { %>
+            <% if((currentUser) && (currentUser.displayName === comment.author.displayName)){ %> 
+                <button type="button" class="btn btn-sm float-right" data-toggle="modal" data-target="#deleteCommentModal">
+                    <i class="fas fa-times fa-lg"></i>
+                </button>
+                <!-- delete comment modal -->
+                <form action="/home/<%= blog.slug %>/comment/<%=comment.id%>?_method=DELETE" method="POST" class="d-inline">
+                        <div class="modal fade" id="deleteCommentModal" tabindex="-1" aria-labelledby="deleteCommentModal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteCommentModal">Delete Comment</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> Delete Comment?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-sm btn-danger float-right">Delete</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            <% } %>
+            <div class="row">
+                <img src="<%=comment.author.profileImg%>" class="comment-profileImg ml-3 mr-1">
+                <a href="/usershow/<%=comment.author.displayName%>" class="text-dark"><%=comment.author.displayName%></a>
+            </div>
+            <p class="ml-4"><%=comment.content%></p>
+            <hr>
+        <% }); %>
+    </div>
+
+
+
+
+    <!-- post comment Modal -->
+    <div class="modal fade" id="postComment" tabindex="-1" aria-labelledby="postCommentModal" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="postCommenttitle">Leave a new comment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <%- include("postComment") %>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
 </div>
-</div>
-      
-            
 <%- include("../../partials/footer") %>

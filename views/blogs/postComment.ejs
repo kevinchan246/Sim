@@ -1,0 +1,18 @@
+<form action="/home/<%=blog.slug%>/comment" method="POST" id="postCommentForm">
+
+    <div class="container">
+        <% if (currentUser) { %>
+            <div class="form-group">
+                
+                <input type="hidden" id="userId" name="userId" value="<%=currentUser.id%>">
+                <input type="hidden" id="userDisplayName" name="userDisplayName" value="<%=currentUser.displayName%>">
+                <input type="hidden" id="userProfileImg" name="userProfileImg" value="<%=currentUser.profileImg%>">
+                
+                <textarea class="form-control" id="newComment" rows="5" name="content" placeholder="Enter comments"></textarea>
+                <button type="submit" class="btn btn-outline-dark btn-sm mt-2">Post</button>
+            </div>
+        <% } else { %>
+            <h2>Please <a href="/login">login</a> to leave comments</h2>
+        <% } %>    
+    </div>
+</form>

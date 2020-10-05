@@ -33,8 +33,21 @@ const blogSchema = new mongoose.Schema({
     sanitizedHtml: {
         type: String,
         required: true
-    }
+    },
 
+    comments: [{
+        author : {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            displayName: String,
+            profileImg: String
+        },
+        content : {type: String},
+        createdDate: { type: Date, default: Date.now },
+    }]
+    
 })
 
 //run before every operation like save, create, update, etc
@@ -52,5 +65,6 @@ blogSchema.pre('validate', function(next) {
 
     next()
 })
+
 
 module.exports = mongoose.model("blog", blogSchema);
