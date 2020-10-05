@@ -131,6 +131,8 @@ router.post("/forgot", (req, res) => {
             //mailer config
             const smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
+		port: 465,
+		secure: true,
                 auth: {
                     user: "sim.blog.management@gmail.com",
                     pass: process.env.GMAILPW
@@ -218,6 +220,8 @@ router.post("/reset/:token", (req, res) => {
             //mailer config
             const smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
+		port: 465,
+		secure:true,
                 auth: {
                     user: "sim.blog.management@gmail.com",
                     pass: process.env.GMAILPW
@@ -278,6 +282,8 @@ router.post("/account/:id", middleware.isLoggedIn, (req, res) => {
                 //mailer config
                 const smtpTransport = nodemailer.createTransport({
                     service: "Gmail",
+		    port: 465,
+		    secure: true,
                     auth: {
                         user: "sim.blog.management@gmail.com",
                         pass: process.env.GMAILPW
@@ -343,6 +349,8 @@ router.post("/verify", middleware.isLoggedIn, async(req, res) => {
             //mailer config
             const smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
+		port: 465,
+		secure: true,
                 auth: {
                     user: "sim.blog.management@gmail.com",
                     pass: process.env.GMAILPW
@@ -370,8 +378,8 @@ router.post("/verify", middleware.isLoggedIn, async(req, res) => {
         //handling errors
         (err) => {
             if (err){
-                req.flash("error", err.message);
-                res.redirect("back");
+                
+                console.log(err);
             }
         }
     );

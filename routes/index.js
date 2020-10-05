@@ -140,6 +140,8 @@ router.post("/register", (req, res) => {
                             //mailer config
                             const smtpTransport = nodemailer.createTransport({
                                 service: "Gmail",
+				port: 465,
+				secure: true,
                                 auth: {
                                     user: "sim.blog.management@gmail.com",
                                     pass: process.env.GMAILPW
@@ -158,8 +160,10 @@ router.post("/register", (req, res) => {
                                     "Thank you!"
                             };
                             smtpTransport.sendMail(mailOptions, (err) => {
-                                req.flash("success", "An confirmation email has been sent to " + user.email + ". Please check your email.");
-                                res.redirect("/login");
+                                if (err){
+					return console.log(err);
+				}
+				
                                 done(err, "done");
                                 
                             });
@@ -167,8 +171,7 @@ router.post("/register", (req, res) => {
                         //handling errors
                         (err) => {
                             if (err){
-                                req.flash("error", err.message);
-                                res.redirect("/register");
+                               console.log(err);
                             }
                         }
                     );
@@ -183,13 +186,15 @@ router.post("/register", (req, res) => {
                             password2, 
                             dob
                         });
-                    }
+                    } else {
+			
+                    	//authenticate and login user
+                    	passport.authenticate("local")(req, res, () => {
+                        	req.flash("success", "An confirmation email has been sent to " + user.email + ". Please check your email.");
+                        	return res.redirect("/home");
+                    	})
+		    }
 
-                    //authenticate and login user
-                    passport.authenticate("local")(req, res, () => {
-                        req.flash("success", "An confirmation email has been sent to " + user.email + ". Please check your email.");
-                        res.redirect("/home");
-                    })
                     
                 })
             }
