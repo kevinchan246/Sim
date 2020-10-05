@@ -14,7 +14,7 @@ require("./config/passport")(passport);
 const User = require("./models/user");
 
 /*use mongoose to connect to the mongoDB*/
-mongoose.connect('mongodb://localhost:27017/my_blog', {
+mongoose.connect('mongodb://localhost:27017/sim_blog', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -66,7 +66,7 @@ app.use(thirdPartyAuth);
 
 
 
-const port = process.env.port || 5000;
+const port = process.env.port || 8000;
 app.listen(port, function(){
     console.log("Server Started at portal " + port + "...");
 })
