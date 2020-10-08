@@ -226,4 +226,10 @@ router.get("/logout", (req, res) => {
 })
 
 
+//get privacy policy route
+router.get("/privacy", (req, res) => {
+    res.render("privacyPolicy");
+})
+
+
 module.exports = router;
