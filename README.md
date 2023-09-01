@@ -1,8 +1,6 @@
 # Sim
  Multi-user Blogging Website
 
-Actual website hosted on AWS EC2: <a href="https://simblogging.com">Click Me to see the actual website</a>
-
 ### Home Page
 The Home Page is the first end point when the users enter this website.
 
